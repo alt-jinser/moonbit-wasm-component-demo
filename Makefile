@@ -1,16 +1,18 @@
 MOON = moon
 WAC = wac
 WASM-TOOLS = wasm-tools
+WIT-BINDGEN = wit-bindgen
 CARGO = cargo
 
-.PHONY: all goal clean test
+.PHONY: all clean test
 
 all: goal
 
+.PHONY: goal
+goal: prebuild build/final.wasm
+
 prebuild:
 	mkdir build -p
-
-goal: prebuild build/final.wasm
 
 build/adder.wasm: adder/
 	cd adder/ && \
@@ -39,6 +41,17 @@ build/composed.wasm: build/adder.wasm build/calculator.wasm
 
 build/final.wasm: build/command.wasm build/composed.wasm
 	$(WAC) plug build/command.wasm --plug build/composed.wasm -o build/final.wasm
+
+adder/gen:
+	$(WIT-BINDGEN) moonbit wit/adder --world adder --derive-show --derive-eq --out-dir adder && \
+	$(MOON) fmt -C adder
+
+calculator/gen:
+	mkdir wit/calculator/deps -p && \
+	cp wit/adder wit/calculator/deps -r && \
+	$(WIT-BINDGEN) moonbit wit/calculator --world calculator --derive-show --derive-eq --out-dir calculator && \
+	$(MOON) fmt -C calculator && \
+	rm wit/calculator/deps -r
 
 clean:
 	rm build/ -rf
