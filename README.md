@@ -23,3 +23,6 @@ For more information, check the [Makefile](Makefile).
 > make adder/gen
 > make calculator/gen
 ```
+
+## TODO
+- [ ] rewrite command in MoonBit
