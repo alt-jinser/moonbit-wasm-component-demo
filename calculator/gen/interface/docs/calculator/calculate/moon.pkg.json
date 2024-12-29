@@ -1,0 +1,5 @@
+{
+  "import": [
+    { "path": "docs/calculator/interface/docs/adder/add", "alias": "add" }
+  ]
+}

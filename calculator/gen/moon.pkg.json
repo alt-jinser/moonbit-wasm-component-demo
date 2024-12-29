@@ -1,0 +1,14 @@
+{
+  "link": {
+    "wasm": {
+      "exports": ["cabi_realloc:cabi_realloc", "wasmExportEvalExpression:docs:calculator/calculate@0.1.0#eval-expression"],
+      "export-memory-name": "memory",
+      "heap-start-address": 16
+    }
+  },
+  "import": [
+    { "path": "docs/calculator/ffi", "alias": "ffi" },
+    { "path": "docs/calculator/gen/interface/docs/calculator/calculate", "alias": "calculate" },
+    { "path": "docs/calculator/interface/docs/adder/add", "alias": "add" }
+  ]
+}
